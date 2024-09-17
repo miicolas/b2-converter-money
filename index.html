@@ -1,18 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Money Converter</title>
-    <link rel="stylesheet" href="style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Convertisseur</title>
+    <link rel="stylesheet" href="style.css" />
     <script src="https://cdn.tailwindcss.com"></script>
-
-</head>
-<body>
-
-    <h1 class="text-3xl font-bold underline">
-        Hello world!
-    </h1>
-    
-</body>
+  </head>
+  <body>
+    <form class="flex justify-center items-center h-screen">
+      <div class="flex-col flex">
+        <h1 class="text-center">Convertisseur</h1>
+        <div class="flex gap-8">
+          <div class="input py-4 flex flex-col gap-2">
+            <label for="amount">Montant</label>
+            <input
+              type="text"
+              id="amount"
+              name="amount"
+              placeholder="Saisissez un montant"
+              class="border border-gray-300 rounded-md px-4 py-2"
+            />
+          </div>
+          <div class="output py-4">
+            <h2>Résultat</h2>
+            <p class="text-4xl mt-1">0.00</p>
+          </div>
+        </div>
+        <div class="input py-4 flex flex-col gap-2">
+          <label for="from">Devise de départ :</label>
+          <select
+            name="from"
+            id="from"
+            class="border border-gray-300 rounded-md px-4 py-2"
+          >
+            <option value="usd">USD</option>
+            <option value="eur">EUR</option>
+            <option value="gbp">GBP</option>
+          </select>
+        </div>
+        <div class="input py-4 flex flex-col gap-2">
+          <label for="to">Devise souhaitée :</label>
+          <select
+            name="to"
+            id="to"
+            class="border border-gray-300 rounded-md px-4 py-2"
+          >
+            <option value="usd">USD</option>
+            <option value="eur">EUR</option>
+            <option value="gbp">GBP</option>
+          </select>
+        </div>
+      </div>
+    </form>
+  </body>
 </html>
