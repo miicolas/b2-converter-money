@@ -174,3 +174,42 @@ CURRENCIES.forEach((currency) => {
   fromCurrency.appendChild(option);
   toCurrency.appendChild(option.cloneNode(true));
 });
+
+const amount = document.getElementById("amount"); // Récupération de l'input avec le montant
+const result = document.getElementById("result"); // Récupération de l'input avec la conversion du montant
+
+amount.addEventListener("input", async (event) => {
+  // Ajout d'un listener sur l'input pour la conversion
+  const value = event.target.value;
+  const from = fromCurrency.value;
+  const to = toCurrency.value;
+
+  if (value === "" || value === null || isNaN(value) || value <= 0) {
+    // Si le montant est invalide
+    result.innerText = "0.00";
+    return;
+  }
+
+  try {
+    const response = await fetch(
+      // Envoie de la requête à l'API
+      `https://v6.exchangerate-api.com/v6/${API_KEY}/pair/${from}/${to}/${value}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "*",
+        },
+      }
+    );
+    if (!response.ok)
+      // Si l'erreur est renvoyée par l'API
+      throw new Error(`HTTP erreur! statut: ${response.status}`);
+    const data = await response.json(); // Récupération de la réponse
+    if (data.result === "error") throw new Error(data["error-type"]);
+    const convertedAmount = data.conversion_result; // Récupération de la conversion
+    result.innerText = convertedAmount.toFixed(2); // Affichage de la conversion arrondie à 2 décimales
+  } catch (error) {
+    console.log(error);
+    result.innerText = "0.00";
+  }
+});
