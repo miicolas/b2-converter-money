@@ -176,29 +176,17 @@ CURRENCIES.forEach((currency) => {
   fromCurrency.appendChild(option);
   toCurrency.appendChild(option.cloneNode(true));
 });
-
-const amount = document.getElementById("amount"); // Récupération de l'input avec le montant
-const result = document.getElementById("result"); // Récupération de l'input avec la conversion du montant
-const conversionRateInput = document.getElementById("conversionRate"); // Récupération de l'input avec le taux de conversion
-const from = fromCurrency.value;
-const to = toCurrency.value;
+// Récupération de l'input avec la conversion du montant
 
 // Quand le from et le to changent, on réinitialise le montant
-fromCurrency.addEventListener("change", () => {
-  amount.value = "";
-  result.innerText = "0.00";
-  conversionRateInput.innerText = "0.00";
-});
 
-toCurrency.addEventListener("change", () => {
-  amount.value = "";
-  result.innerText = "0.00";
-  conversionRateInput.innerText = "0.00";
-});
-
-amount.addEventListener("input", async (event) => {
-  // Ajout d'un listener sur l'input pour la conversion
-  const value = event.target.value;
+async function updateResult() {
+  const amount = document.getElementById("amount"); // Récupération de l'input avec le montant
+  const result = document.getElementById("result");
+  const value = amount.value;
+  const from = fromCurrency.value;
+  const to = toCurrency.value;
+  const conversionRateInput = document.getElementById("conversionRate"); // Récupération de l'input avec le taux de conversion
 
   if (value === "" || value === null || isNaN(value) || value <= 0) {
     // Si le montant est invalide
@@ -234,4 +222,17 @@ amount.addEventListener("input", async (event) => {
     result.innerText = "0.00";
     conversionRateInput.innerText = "0.00"; // Afficher 0.00 si une erreur se produit
   }
+}
+
+amount.addEventListener("input", async () => {
+  // Ajout d'un listener sur l'input pour la conversion
+  await updateResult();
+});
+
+fromCurrency.addEventListener("change", async () => {
+  await updateResult();
+});
+
+toCurrency.addEventListener("change", async () => {
+  await updateResult();
 });
